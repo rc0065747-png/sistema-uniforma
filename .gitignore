@@ -1,0 +1,26 @@
+# Entorno virtual de Python
+venv/
+.venv/
+env/
+
+# Archivos compilados y caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Variables de entorno y secretos locales (NUNCA subir contraseñas ni tokens reales)
+.env
+.env.local
+
+# Base de datos local generada en entorno de desarrollo
+database/*.db
+database/*.sqlite3
+*.db-journal
+*.db-wal
+
+# Archivos del sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
