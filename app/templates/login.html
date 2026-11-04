@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Uniforma · Iniciar sesión</title>
+    <link rel="stylesheet" href="/static/styles.css?v=3">
+    <style>
+/* ============================================================================
+   ESTILOS FIELES A LOS PROTOTIPOS DE ALTA FIDELIDAD APROBADOS EN U2-E3
+   Paleta oficial:
+   - Azul marino (#1E3A8A) para menú lateral y encabezados
+   - Azul primario (#2563EB) para acciones principales
+   - Fondo gris claro (#F8FAFC) y tarjetas blancas (#FFFFFF)
+   - Verde (#16A34A) para confirmaciones y estado 'Disponible'
+   - Amarillo/Ámbar (#D97706) para advertencias de falta de stock y 'En espera'
+   - Rojo (#DC2626) para errores de validación y estado 'Vencido'
+   ============================================================================ */
+:root {
+    --navy: #1E3A8A;
+    --navy-dark: #172554;
+    --blue: #2563EB;
+    --blue-light: #EFF6FF;
+    --blue-border: #93C5FD;
+    --bg-page: #F8FAFC;
+    --white: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #475569;
+    --border: #CBD5E1;
+    --green: #16A34A;
+    --green-bg: #DCFCE7;
+    --green-border: #86EFAC;
+    --amber: #D97706;
+    --amber-bg: #FEF3C7;
+    --amber-border: #FCD34D;
+    --red: #DC2626;
+    --red-bg: #FEE2E2;
+    --red-border: #FCA5A5;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+input[type="hidden"] {
+    display: none !important;
+}
+
+/* ============================================================================
+   PANTALLA 0: INICIAR SESIÓN (Diseño limpio centrado tal cual Prototipo 0)
+   ============================================================================ */
+.login-topbar {
+    background-color: var(--navy);
+    color: var(--white);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-badge {
+    background-color: var(--white);
+    color: var(--navy);
+    font-weight: 800;
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-wrapper {
+    max-width: 520px;
+    margin: 42px auto;
+    padding: 0 16px;
+}
+
+.login-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 30px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+.login-card h1 {
+    font-size: 20px;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.login-subtitle {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* ============================================================================
+   ESTRUCTURA CON MENÚ LATERAL AZUL MARINO (PANTALLAS 1, 2 Y 3)
+   ============================================================================ */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: var(--navy);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 14px;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 18px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.sidebar-brand-title {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.sidebar-brand-sub {
+    font-size: 11.5px;
+    color: #BFDBFE;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+.sidebar-link {
+    color: #DBEAFE;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    display: block;
+}
+
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.sidebar-link.active {
+    background-color: var(--blue);
+    color: var(--white);
+    font-weight: 700;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.18);
+    margin: 10px 0;
+}
+
+.main-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-page);
+}
+
+/* Encabezado superior de cada pantalla */
+.screen-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.screen-header.navy-bar {
+    background-color: var(--navy);
+    color: var(--white);
+    border-bottom: none;
+}
+
+.screen-title {
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.user-pill {
+    background-color: #EFF6FF;
+    color: var(--navy);
+    border: 1px solid var(--blue-border);
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-size: 12.5px;
+    font-weight: 700;
+}
+
+.navy-bar .user-pill {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.screen-body {
+    max-width: 920px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 0 24px 32px 24px;
+}
+
+/* Tarjetas limpias de pasos */
+.step-card {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+}
+
+.step-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.row-2col {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.row-2col .step-card {
+    margin-bottom: 0;
+}
+
+.avail-card {
+    background-color: var(--blue-light);
+    border: 1px solid var(--blue-border);
+    border-left: 5px solid var(--blue);
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.avail-card.sin-stock {
+    background-color: var(--amber-bg);
+    border-color: var(--amber-border);
+    border-left-color: var(--amber);
+}
+
+.avail-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+}
+
+.avail-stock {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 4px;
+}
+
+.avail-card.sin-stock .avail-stock {
+    color: var(--amber);
+}
+
+.avail-meta {
+    font-size: 13px;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+/* Controles de formulario sencillos y limpios */
+.field-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.field-grid-3 {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.1fr;
+    gap: 12px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 11px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: var(--text-main);
+    background-color: var(--white);
+}
+
+/* Botones fieles al prototipo */
+.btn-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.btn {
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-blue {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.btn-green {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.btn-amber {
+    background-color: var(--amber);
+    color: var(--white);
+}
+
+.btn-red {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.btn-outline {
+    background-color: var(--white);
+    color: var(--text-main);
+    border-color: var(--border);
+}
+
+/* Indicadores en línea de anticipo y saldo */
+.anticipo-row {
+    display: grid;
+    grid-template-columns: 180px 1.2fr 1fr;
+    gap: 12px;
+    align-items: end;
+}
+
+.status-box-inline {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.status-valid {
+    background-color: var(--green-bg);
+    color: #166534;
+    border: 1px solid var(--green-border);
+}
+
+.status-invalid {
+    background-color: var(--red-bg);
+    color: #991B1B;
+    border: 1px solid var(--red-border);
+}
+
+.status-neutral {
+    background-color: #F1F5F9;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+/* Tarjetas de Resumen de Liquidación (Precio pactado, Anticipo pagado, Saldo pendiente) */
+.summary-3cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.mini-summary-card {
+    background-color: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.mini-summary-label {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.mini-summary-val {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+.mini-summary-val.green {
+    color: var(--green);
+}
+
+.mini-summary-val.blue {
+    color: var(--blue);
+}
+
+/* Tablas sencillas de Apartados Encontrados y Apartados Vencidos */
+table.clean-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table.clean-table th {
+    background-color: #F1F5F9;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+}
+
+table.clean-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #E2E8F0;
+    vertical-align: middle;
+}
+
+table.clean-table tr.selected-row td {
+    background-color: #EFF6FF;
+    font-weight: 600;
+}
+
+.pill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+}
+
+.pill-green {
+    background-color: var(--green-bg);
+    color: #15803D;
+}
+
+.pill-amber {
+    background-color: var(--amber-bg);
+    color: #B45309;
+}
+
+.pill-red {
+    background-color: var(--red-bg);
+    color: #B91C1C;
+}
+
+.pill-blue {
+    background-color: #DBEAFE;
+    color: #1D4ED8;
+}
+
+/* Cajas de Mensajes de Resultado (Verde = Éxito, Ámbar = Advertencia, Rojo = Error) */
+.msg-box {
+    padding: 13px 16px;
+    border-radius: 8px;
+    margin-top: 14px;
+    font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.msg-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 13px;
+    flex-shrink: 0;
+    color: var(--white);
+}
+
+.msg-success {
+    background-color: var(--green-bg);
+    border: 1px solid var(--green-border);
+    border-left: 5px solid var(--green);
+    color: #14532D;
+}
+.msg-success .msg-icon {
+    background-color: var(--green);
+}
+
+.msg-warn {
+    background-color: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    border-left: 5px solid var(--amber);
+    color: #78350F;
+}
+.msg-warn .msg-icon {
+    background-color: var(--amber);
+}
+
+.msg-error {
+    background-color: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-left: 5px solid var(--red);
+    color: #7F1D1D;
+}
+.msg-error .msg-icon {
+    background-color: var(--red);
+}
+
+.msg-title {
+    font-weight: 800;
+    font-size: 13.5px;
+    margin-bottom: 2px;
+}
+
+.db-footer-note {
+    margin-top: 18px;
+    padding: 8px 12px;
+    background: #F1F5F9;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+}
+
+    </style>
+</head>
+<body>
+
+    <header class="login-topbar">
+        <div class="logo-badge">U</div>
+        <div>
+            <div style="font-size: 16px; font-weight: 800; line-height: 1.15;">Sistema Uniforma</div>
+            <div style="font-size: 12px; color: #BFDBFE;">Control de inventario y seguimiento de apartados</div>
+        </div>
+    </header>
+
+    <main class="login-wrapper">
+        <section class="login-card">
+            <h1>Iniciar sesión</h1>
+            <p class="login-subtitle">Ingrese sus datos de operador para habilitar las funciones de su rol.</p>
+
+            {% if msg_error %}
+            <div class="msg-box msg-error" style="margin-top: 0; margin-bottom: 16px;">
+                <div class="msg-icon">✕</div>
+                <div>
+                    <div class="msg-title">Acceso denegado</div>
+                    <div>{{ msg_error }}</div>
+                </div>
+            </div>
+            {% endif %}
+
+            <form action="/login" method="post">
+                <div class="field-grid-2">
+                    <div class="form-group">
+                        <label for="id_usuario">ID de usuario *</label>
+                        <input type="number" id="id_usuario" name="id_usuario" value="{{ form_id }}" placeholder="Ej. 101" class="form-control" style="font-weight: 700;" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rol">Rol asignado *</label>
+                        <select id="rol" name="rol" class="form-control" style="border: 1.5px solid #2563EB; color: #1E3A8A; font-weight: 700;" required>
+                            <option value="Vendedor" {% if form_rol == 'Vendedor' %}selected{% endif %}>Vendedor</option>
+                            <option value="Gerente" {% if form_rol == 'Gerente' %}selected{% endif %}>Gerente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 12px;">
+                    <label for="nombre">Nombre completo del usuario *</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ form_nombre }}" placeholder="Ej. Carlos Méndez" class="form-control" required>
+                </div>
+
+                <div class="btn-row" style="margin-top: 18px;">
+                    <button type="submit" class="btn btn-blue" style="flex: 1.3;">Iniciar sesión</button>
+                    <a href="/login?limpiar=1" class="btn btn-outline" style="flex: 1;">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+
+</body>
+</html>
